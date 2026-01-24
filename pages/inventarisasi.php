@@ -216,7 +216,7 @@ if (!$reportView) {
         'b.isbn_issn AS \'' . __('ISBN/ISSN') . '\'',
         'GROUP_CONCAT(ma.author_name SEPARATOR \', \') AS \'' . __('Pengarang') . '\'',
         'mp.publisher_name AS \'' . __('Penerbit') . '\'',
-        'b.publish_year AS \'' . __('Tahun Terbit') . '\'',
+        'b.publish_year AS \'' . __('Tahun') . '\'',
         'mpl.place_name AS \'' . __('Kota') . '\'',
         'ct.coll_type_name AS \'' . __('Tipe Koleksi') . '\'',
         'i.price AS \'' . __('Harga') . '\'',
