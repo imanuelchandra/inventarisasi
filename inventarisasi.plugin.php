@@ -12,4 +12,11 @@ use SLiMS\Plugins;
 $plugin = Plugins::getInstance();
 
 Plugins::getInstance()->registerAutoload(__DIR__);
-Plugins::menu('reporting', 'Laporan Inventarisasi', __DIR__ . '/pages/inventarisasi.php');
+
+
+$path =  __DIR__ . '/pages/inventarisasi.php';
+ // Make default group menu
+Plugins::group('Inventarisasi', function() use($path) {
+            // Scan all file inside module directory as menu
+ Plugins::menu('reporting', 'Buku Induk', $path);
+});
