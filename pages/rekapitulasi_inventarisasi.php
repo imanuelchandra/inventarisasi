@@ -107,14 +107,6 @@ if (!$reportView) {
                     <?php echo simbio_form_element::textField('text', 'judul', '', 'class="form-control col-4"'); ?>
                 </div>
                 <div class="form-group divRow">
-                    <label><?php echo __('Kode Eksemplar'); ?></label>
-                    <?php echo simbio_form_element::textField('text', 'kodeEksemplar', '', 'class="form-control col-4"'); ?>
-                </div>
-                <div class="form-group divRow">
-                    <label><?php echo __('Kode Inventaris'); ?></label>
-                    <?php echo simbio_form_element::textField('text', 'kodeInventaris', '', 'class="form-control col-4"'); ?>
-                </div>
-                <div class="form-group divRow">
                     <label><?php echo __('GMD'); ?></label>
                     <?php
                     $gmd_q = $dbs->query('SELECT gmd_id, gmd_name FROM mst_gmd');
@@ -239,10 +231,6 @@ if (!$reportView) {
             $criteria .= ' AND (b.title LIKE \'%' . $keyword . '%\' OR b.isbn_issn LIKE \'%' . $keyword . '%\')';
         }
     }
-    if (isset($_GET['kodeEksemplar']) and !empty($_GET['kodeEksemplar'])) {
-        $item_code = $dbs->escape_string(trim($_GET['kodeEksemplar']));
-        $criteria .= ' AND i.item_code LIKE \'%' . $item_code . '%\'';
-    }
     if (isset($_GET['tipeKoleksi'])) {
         $coll_type_IDs = '';
         foreach ($_GET['tipeKoleksi'] as $id) {
@@ -268,11 +256,6 @@ if (!$reportView) {
         if ($gmd_IDs) {
             $criteria .= " AND b.gmd_id IN($gmd_IDs)";
         }
-    }
-    if (isset($_GET['kodeInventaris']) and ($_GET['kodeInventaris'] != '')) {
-        $kodeInventaris = $dbs->escape_string($_GET['kodeInventaris']);
-        //$criteria .= ' AND b.classification LIKE \'' . $class . '%\'';
-         $criteria .= ' AND i.inventory_code LIKE \'%' . $kodeInventaris . '%\'';
     }
     if (isset($_GET['lokasiRuangan']) and !empty($_GET['lokasiRuangan'])) {
         $location = $dbs->escape_string(trim($_GET['lokasiRuangan']));
