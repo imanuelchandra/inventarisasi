@@ -340,7 +340,7 @@ if (!$reportView) {
             i.price AS '" . __('HARGA') . "',
             (COUNT(i.item_id) * i.price) AS '" . __('TOTAL HARGA') . "',
             IF(i.source = 1, 'Pembelian', 'Hibah') AS '" . __('SUMBER') . "' FROM " .
-        $table_spec . " WHERE " . $criteria. "GROUP BY i.item_code";
+        $table_spec . " WHERE " . $criteria. "GROUP BY b.biblio_id";
     // echo $xlsquery;
     unset($_SESSION['xlsdata']);
     $_SESSION['xlsquery'] = $xlsquery;
