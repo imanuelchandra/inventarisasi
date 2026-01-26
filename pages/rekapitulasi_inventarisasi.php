@@ -204,7 +204,6 @@ if (!$reportView) {
     $reportgrid->setSQLColumn(
         'i.received_date AS \'' . __('Tanggal Pencatatan') . '\'',
         'b.title AS \'' . __('Judul') . '\'',
-        'COUNT(i.item_id) AS \''.__('Eksemplar').'\'',
         'IF(COUNT(i.item_id)>0, COUNT(i.item_id), "<strong style=\"color: #f00;\">'. __('None') .'</strong>") AS \''.__('Eksemplar').'\'',
         'b.gmd AS \'' . __('GMD') . '\'',
         'b.edition AS \'' . __('Edisi') . '\'',
@@ -346,7 +345,7 @@ if (!$reportView) {
 
     $xlsquery = "SELECT i.received_date AS '" . __('TANGGAL PENCATATAN') . "',
             b.title AS '" . __('JUDUL') . "',
-            IF(COUNT(i.item_id)>0, COUNT(i.item_id), '<strong style=\"color: #f00;\">\'" . __('None') . "\'</strong>') AS '" . __('EKSEMPLAR') . "',
+            IF(COUNT(i.item_id)>0, COUNT(i.item_id), '" . __('None') . "') AS '" . __('EKSEMPLAR') . "',
             b.gmd AS '" . __('GMD') . "',
             b.edition AS '" . __('EDISI') . "',
             b.isbn_issn AS '" . __('ISBN/ISSN') . "',
