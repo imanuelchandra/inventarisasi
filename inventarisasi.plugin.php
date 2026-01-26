@@ -14,9 +14,12 @@ $plugin = Plugins::getInstance();
 Plugins::getInstance()->registerAutoload(__DIR__);
 
 
-$path =  __DIR__ . '/pages/inventarisasi.php';
+$pathBukuInduk = __DIR__ . '/pages/inventarisasi.php';
+$pathRekap = __DIR__ . '/pages/rekapitulasi_inventarisasi.php';
+//$path =  __DIR__ . '/pages/inventarisasi.php';
  // Make default group menu
-Plugins::group('Inventarisasi', function() use($path) {
+Plugins::group('Inventarisasi', function() use($pathBukuInduk, $pathRekap) {
             // Scan all file inside module directory as menu
- Plugins::menu('reporting', 'Buku Induk', $path);
+ Plugins::menu('reporting', 'Buku Induk', $pathBukuInduk);
+ Plugins::menu('reporting', 'Rekapitulasi Inventarisasi', $pathRekap);
 });
