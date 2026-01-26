@@ -81,7 +81,7 @@ function httpQuery($query = [])
     return http_build_query(array_unique(array_merge($_GET, $query)));
 }
 
-$page_title = 'Laporan Rakpitulasi Inventarisasi';
+$page_title = 'Laporan Rekapitulasi Inventarisasi';
 $reportView = false;
 $num_recs_show = 20;
 if (isset($_GET['reportView'])) {
@@ -92,7 +92,7 @@ if (!$reportView) {
 ?>
     <!-- filter -->
     <div class="per_title">
-        <h2><?php echo __('Laporan Rakpitulasi Inventarisasi'); ?></h2>
+        <h2><?php echo __('Laporan Rekapitulasi Inventarisasi'); ?></h2>
     </div>
     <div class="infoBox">
         <?php echo __('Report Filter'); ?>
