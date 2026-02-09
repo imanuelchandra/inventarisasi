@@ -204,6 +204,7 @@ if (!$reportView) {
         'b.publisher AS \'' . __('Penerbit') . '\'',
         'b.publish_year AS \'' . __('Tahun') . '\'',
         'b.publish_place AS \'' . __('Kota') . '\'',
+        'b.language AS \'' . __('Bahasa') . '\'',
         'ct.coll_type_name AS \'' . __('Tipe Koleksi') . '\'',
         'i.price AS \'' . __('Harga') . '\'',
         '(COUNT(i.item_id) * i.price)  AS \'' . __('Total Harga') . '\'',
@@ -313,7 +314,7 @@ if (!$reportView) {
     // modify column value
     //$reportgrid->modifyColumnContent(1, 'callback{showTitleAuthors}');
     //$reportgrid->modifyColumnContent(3, 'callback{showStatus}');
-    $reportgrid->invisible_fields = array(14);
+    $reportgrid->invisible_fields = array(15);
 
     // show spreadsheet export button
     $reportgrid->show_spreadsheet_export = true;
@@ -336,6 +337,7 @@ if (!$reportView) {
             b.publisher AS '" . __('PENERBIT') . "',
             b.publish_year AS '" . __('TAHUN TERBIT') . "',
             b.publish_place AS '" . __('KOTA') . "',
+            b.language AS '" . __('BAHASA') . "',
             ct.coll_type_name AS '" . __('TIPE KOLEKSI') . "',
             i.price AS '" . __('HARGA') . "',
             (COUNT(i.item_id) * i.price) AS '" . __('TOTAL HARGA') . "',

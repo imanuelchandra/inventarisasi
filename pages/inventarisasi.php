@@ -201,6 +201,7 @@ if (!$reportView) {
                    LEFT JOIN mst_publisher AS mp ON mp.publisher_id=b.publisher_id
                    LEFT JOIN mst_place AS mpl ON mpl.place_id=b.publish_place_id
                    LEFT JOIN mst_coll_type AS ct ON i.coll_type_id=ct.coll_type_id
+                   LEFT JOIN mst_language AS ml ON b.language_id=ml.language_id
                    LEFT JOIN mst_item_status AS mis ON i.item_status_id=mis.item_status_id';
 
     // create datagrid
@@ -218,6 +219,7 @@ if (!$reportView) {
         'mp.publisher_name AS \'' . __('Penerbit') . '\'',
         'b.publish_year AS \'' . __('Tahun') . '\'',
         'mpl.place_name AS \'' . __('Kota') . '\'',
+        'ml.language_name AS \'' . __('Bahasa') . '\'',
         'ct.coll_type_name AS \'' . __('Tipe Koleksi') . '\'',
         'i.price AS \'' . __('Harga') . '\'',
         'IF(i.source = 1, "Pembelian", "Hibah") AS \'' . __('Sumber') . '\'',
@@ -335,7 +337,7 @@ if (!$reportView) {
     // modify column value
     //$reportgrid->modifyColumnContent(1, 'callback{showTitleAuthors}');
     //$reportgrid->modifyColumnContent(3, 'callback{showStatus}');
-    $reportgrid->invisible_fields = array(14);
+    $reportgrid->invisible_fields = array(15);
 
     // show spreadsheet export button
     $reportgrid->show_spreadsheet_export = true;
@@ -359,6 +361,7 @@ if (!$reportView) {
             mp.publisher_name AS '" . __('PENERBIT') . "',
             b.publish_year AS '" . __('TAHUN TERBIT') . "',
             mpl.place_name AS '" . __('KOTA') . "',
+            ml.language_name AS '" . __('BAHASA') . "',
             ct.coll_type_name AS '" . __('TIPE KOLEKSI') . "',
             i.price AS '" . __('HARGA') . "',
             IF(i.source = 1, 'Pembelian', 'Hibah') AS '" . __('SUMBER') . "' FROM " .
