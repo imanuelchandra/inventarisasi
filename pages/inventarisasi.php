@@ -151,9 +151,19 @@ if (!$reportView) {
                     ?>
                 </div>
                 <div class="form-group divRow">
+                    <label><?php echo __('Tanggal Penerimaan'); ?></label>
+                    <div class="divRowContent">
+                        <div id="range-penerimaan">
+                            <input type="text" name="tglMulaiPenerimaan">
+                            <span><?= __('to') ?></span>
+                            <input type="text" name="tglSelesaiPenerimaan">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group divRow">
                     <label><?php echo __('Tanggal Pencatatan'); ?></label>
                     <div class="divRowContent">
-                        <div id="range">
+                        <div id="range-pencatatan">
                             <input type="text" name="tglMulaiPencatatan">
                             <span><?= __('to') ?></span>
                             <input type="text" name="tglSelesaiPencatatan">
@@ -168,6 +178,7 @@ if (!$reportView) {
                 <div class="form-group divRow">
                     <label><?php echo __('Sumber'); ?></label>
                     <?php
+                    $source_options[] = array('0', __('ALL'));
                     $source_options[] = array('1', __('Buy'));
                     $source_options[] = array('2', __('Prize/Grant'));
                     echo simbio_form_element::selectList('source[]', $source_options, '', 'multiple="multiple" size="5" class="form-control col-3"');
@@ -187,8 +198,14 @@ if (!$reportView) {
     </div>
     <script>
         $(document).ready(function(){
-            const elem = document.getElementById('range');
-            const dateRangePicker = new DateRangePicker(elem, {
+            const elemPenerimaan = document.getElementById('range-penerimaan');
+            const dateRangePickerPenerimaan = new DateRangePicker(elemPenerimaan, {
+                language: '<?= substr($sysconf['default_lang'], 0,2) ?>',
+                format: 'yyyy-mm-dd',
+            });
+
+            const elemPencatatan = document.getElementById('range-pencatatan');
+            const dateRangePickerPencatatan = new DateRangePicker(elemPencatatan, {
                 language: '<?= substr($sysconf['default_lang'], 0,2) ?>',
                 format: 'yyyy-mm-dd',
             });
@@ -313,10 +330,17 @@ if (!$reportView) {
             $criteria .= " AND i.source IN($source)";
         }
     }
+    if (isset($_GET['tglMulaiPenerimaan']) AND !empty($_GET['tglMulaiPenerimaan']) && isset($_GET['tglSelesaiPenerimaan']) AND !empty($_GET['tglSelesaiPenerimaan'])) {
+        $receivedDateStart = $dbs->escape_string(trim($_GET['tglMulaiPenerimaan']));
+        $receivedDateEnd = $dbs->escape_string(trim($_GET['tglSelesaiPenerimaan']));
+        //$criteria .= ' AND (i.received_date >= \'' . $inputDateStart . '\' AND i.received_date <= \'' . $inputDateEnd . '\') OR (i.input_date >= \'' . $inputDateStart . '\' AND i.input_date <= \'' . $inputDateEnd . '\')';
+        $criteria .= ' AND (i.received_date >= \'' . $receivedDateStart . '\' AND i.received_date <= \'' . $receivedDateEnd . '\')';
+    }
     if (isset($_GET['tglMulaiPencatatan']) AND !empty($_GET['tglMulaiPencatatan']) && isset($_GET['tglSelesaiPencatatan']) AND !empty($_GET['tglSelesaiPencatatan'])) {
         $inputDateStart = $dbs->escape_string(trim($_GET['tglMulaiPencatatan']));
         $inputDateEnd = $dbs->escape_string(trim($_GET['tglSelesaiPencatatan']));
-        $criteria .= ' AND (i.received_date >= \'' . $inputDateStart . '\' AND i.received_date <= \'' . $inputDateEnd . '\')';
+        //$criteria .= ' AND (i.received_date >= \'' . $inputDateStart . '\' AND i.received_date <= \'' . $inputDateEnd . '\') OR (i.input_date >= \'' . $inputDateStart . '\' AND i.input_date <= \'' . $inputDateEnd . '\')';
+        $criteria .= ' AND (i.input_date >= \'' . $inputDateStart . '\' AND i.input_date <= \'' . $inputDateEnd . '\')';
     }
     if (isset($_GET['totalSetiapHalaman'])) {
         $recsEachPage = (int)$_GET['totalSetiapHalaman'];
