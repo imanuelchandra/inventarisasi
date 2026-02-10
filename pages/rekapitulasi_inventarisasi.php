@@ -156,6 +156,14 @@ if (!$reportView) {
                     <?php echo simbio_form_element::textField('text', 'tahunTerbit', '', 'class="form-control col-1"'); ?>
                 </div>
                 <div class="form-group divRow">
+                    <label><?php echo __('Sumber'); ?></label>
+                    <?php
+                    $source_options[] = array('1', __('Buy'));
+                    $source_options[] = array('2', __('Prize/Grant'));
+                    echo simbio_form_element::selectList('source[]', $source_options, '', 'multiple="multiple" size="5" class="form-control col-3"');
+                    ?><small class="text-muted"><?php echo __('Press Ctrl and click to select multiple entries'); ?></small>
+                </div>
+                <div class="form-group divRow">
                     <label><?php echo __('Total setiap halaman'); ?></label>
                     <input type="text" name="totalSetiapHalaman" size="3" class="form-control col-1" maxlength="3" value="<?php echo $num_recs_show; ?>" />
                     <small class="text-muted"><?php echo __('Set between 20 and 200'); ?></small>
@@ -208,7 +216,7 @@ if (!$reportView) {
         'ct.coll_type_name AS \'' . __('Tipe Koleksi') . '\'',
         'i.price AS \'' . __('Harga') . '\'',
         '(COUNT(i.item_id) * i.price)  AS \'' . __('Total Harga') . '\'',
-        'IF(i.source = 1, "Pembelian", "Hibah") AS \'' . __('Sumber') . '\'',
+        'CASE WHEN i.source = 1 THEN \'Pembelian\' WHEN i.source = 2 THEN \'Hibah\' ELSE \' \' END AS \'' . __('Sumber') . '\'',
         'i.biblio_id'
     );
     $reportgrid->setSQLorder('b.title ASC');
@@ -265,6 +273,19 @@ if (!$reportView) {
     if (isset($_GET['tahunTerbit']) and !empty($_GET['tahunTerbit'])) {
         $publish_year = $dbs->escape_string(trim($_GET['tahunTerbit']));
         $criteria .= ' AND b.publish_year LIKE \'%' . $publish_year . '%\'';
+    }
+    if (isset($_GET['source']) and !empty($_GET['source'])) {
+        $source = '';
+        foreach ($_GET['source'] as $source) {
+            $source = (int)$source;
+            if ($source) {
+                $source .= "$sourced,";
+            }
+        }
+        $source = substr_replace($source, '', -1);
+        if ($source) {
+            $criteria .= " AND i.source IN($source)";
+        }
     }
     if (isset($_GET['tglMulaiPencatatan']) AND !empty($_GET['tglMulaiPencatatan']) && isset($_GET['tglSelesaiPencatatan']) AND !empty($_GET['tglSelesaiPencatatan'])) {
         $inputDateStart = $dbs->escape_string(trim($_GET['tglMulaiPencatatan']));
@@ -341,7 +362,7 @@ if (!$reportView) {
             ct.coll_type_name AS '" . __('TIPE KOLEKSI') . "',
             i.price AS '" . __('HARGA') . "',
             (COUNT(i.item_id) * i.price) AS '" . __('TOTAL HARGA') . "',
-            IF(i.source = 1, 'Pembelian', 'Hibah') AS '" . __('SUMBER') . "' FROM " .
+            CASE WHEN i.source = 1 THEN 'Pembelian' WHEN i.source = 2 THEN 'Hibah' ELSE ' ' END AS '" . __('SUMBER') . "' FROM " .
         $table_spec . " WHERE " . $criteria. "GROUP BY b.biblio_id";
     // echo $xlsquery;
     unset($_SESSION['xlsdata']);
