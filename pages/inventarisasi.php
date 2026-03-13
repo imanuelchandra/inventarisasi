@@ -238,7 +238,8 @@ if (!$reportView) {
     $reportgrid->setSQLColumn(
         'i.item_code AS \'' . __('Kode Eksemplar') . '\'',
         'i.inventory_code AS \'' . __('Kode Inventaris') . '\'',
-        'i.received_date AS \'' . __('Tanggal Pencatatan') . '\'',
+        'i.received_date AS \'' . __('Tanggal Penerimaan') . '\'',
+        'DATE(i.input_date) AS \'' . __('Tanggal Pencatatan') . '\'',
         'b.title AS \'' . __('Judul') . '\'',
         'g.gmd_name AS \'' . __('GMD') . '\'',
         'b.edition AS \'' . __('Edisi') . '\'',
@@ -385,7 +386,7 @@ if (!$reportView) {
     // modify column value
     //$reportgrid->modifyColumnContent(1, 'callback{showTitleAuthors}');
     //$reportgrid->modifyColumnContent(3, 'callback{showStatus}');
-    $reportgrid->invisible_fields = array(15);
+    $reportgrid->invisible_fields = array(16);
 
     // show spreadsheet export button
     $reportgrid->show_spreadsheet_export = true;
@@ -400,7 +401,8 @@ if (!$reportView) {
 
     $xlsquery = "SELECT i.item_code AS '" . __('KODE EKSEMPLAR') . "',
             i.inventory_code AS '" . __('KODE INVENTARIS') . "',
-            i.received_date AS '" . __('TANGGAL PENCATATAN') . "',
+            i.received_date AS '" . __('TANGGAL PENERIMAAN') . "',
+            DATE(i.input_date) AS '" . __('TANGGAL PENCATATAN') . "',
             b.title AS '" . __('JUDUL') . "',
             g.gmd_name AS '" . __('GMD') . "',
             b.edition AS '" . __('EDISI') . "',
