@@ -219,7 +219,8 @@ if (!$reportView) {
     $reportgrid = new report_datagrid();
     $reportgrid->table_attr = 'class="s-table table table-sm table-bordered"';
     $reportgrid->setSQLColumn(
-        'i.received_date AS \'' . __('Tanggal Pencatatan') . '\'',
+        'i.received_date AS \'' . __('Tanggal Penerimaan') . '\'',
+        'DATE(i.input_date) AS \'' . __('Tanggal Pencatatan') . '\'',
         'b.title AS \'' . __('Judul') . '\'',
         'IF(COUNT(i.item_id)>0, COUNT(i.item_id), "<strong style=\"color: #f00;\">'. __('None') .'</strong>") AS \''.__('Eksemplar').'\'',
         'b.gmd AS \'' . __('GMD') . '\'',
@@ -372,7 +373,8 @@ if (!$reportView) {
     echo 'parent.$(\'#pagingBox\').html(\'' . str_replace(array("\n", "\r", "\t"), '', $reportgrid->paging_set) . '\');' . "\n";
     echo '</script>';
 
-    $xlsquery = "SELECT i.received_date AS '" . __('TANGGAL PENCATATAN') . "',
+    $xlsquery = "SELECT i.received_date AS '" . __('TANGGAL PENERIMAAN') . "',
+            DATE(i.input_date) AS '" . __('TANGGAL PENCATATAN') . "',
             b.title AS '" . __('JUDUL') . "',
             IF(COUNT(i.item_id)>0, COUNT(i.item_id), '" . __('None') . "') AS '" . __('EKSEMPLAR') . "',
             b.gmd AS '" . __('GMD') . "',
