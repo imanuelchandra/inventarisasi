@@ -360,7 +360,7 @@ if (!$reportView) {
     // modify column value
     //$reportgrid->modifyColumnContent(1, 'callback{showTitleAuthors}');
     //$reportgrid->modifyColumnContent(3, 'callback{showStatus}');
-    $reportgrid->invisible_fields = array(15);
+    $reportgrid->invisible_fields = array(16);
 
     // show spreadsheet export button
     $reportgrid->show_spreadsheet_export = true;
