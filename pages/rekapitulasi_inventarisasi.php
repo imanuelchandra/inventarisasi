@@ -174,6 +174,22 @@ if (!$reportView) {
                     echo simbio_form_element::selectList('source[]', $source_options, '', 'multiple="multiple" size="5" class="form-control col-3"');
                     ?><small class="text-muted"><?php echo __('Press Ctrl and click to select multiple entries'); ?></small>
                 </div>
+
+                <div class="form-group divRow">
+                    <label><?php echo __('Program Studi'); ?></label>
+                    <?php
+                    //$coll_type_q = $dbs->query('SELECT coll_type_id, coll_type_name FROM mst_coll_type');
+                    $coll_type_options = array();
+                    $coll_type_options[] = array('ALL', __('ALL'));
+                    $coll_type_options[] = array('PAK', __('Pendidikan Agama Kristen'));
+                    $coll_type_options[] = array('TEO', __('Teologi'));
+                    // while ($coll_type_d = $coll_type_q->fetch_row()) {
+                    //     $coll_type_options[] = array($coll_type_d[0], $coll_type_d[1]);
+                    // }
+                    echo simbio_form_element::selectList('prodi[]', $coll_type_options, '', 'multiple="multiple" size="5" class="form-control col-3"');
+                    ?>
+                </div>
+
                 <div class="form-group divRow">
                     <label><?php echo __('Total setiap halaman'); ?></label>
                     <input type="text" name="totalSetiapHalaman" size="3" class="form-control col-1" maxlength="3" value="<?php echo $num_recs_show; ?>" />
@@ -317,6 +333,22 @@ if (!$reportView) {
         //$criteria .= ' AND (i.received_date >= \'' . $inputDateStart . '\' AND i.received_date <= \'' . $inputDateEnd . '\') OR (i.input_date >= \'' . $inputDateStart . '\' AND i.input_date <= \'' . $inputDateEnd . '\')';
         $criteria .= ' AND (i.input_date >= \'' . $inputDateStart . '\' AND i.input_date <= \'' . $inputDateEnd . '\')';
     }
+
+    if (isset($_GET['prodi'])) {
+        $prodi_IDs = '';
+        foreach ($_GET['prodi'] as $id) {
+            //$id = (int)$id;
+            if ($id) {
+                $prodi_IDs .= "$id";
+            }
+        }
+        //echo $prodi_IDs;
+        //$prodi_IDs = substr_replace($coll_type_IDs, '', -1);
+        if ($prodi_IDs != "ALL") {
+           $criteria .= ' AND i.inventory_code LIKE \'%'.$prodi_IDs.'%\'';
+        }
+    }
+
     if (isset($_GET['totalSetiapHalaman'])) {
         $recsEachPage = (int)$_GET['totalSetiapHalaman'];
         $num_recs_show = ($recsEachPage >= 20 && $recsEachPage <= 200) ? $recsEachPage : $num_recs_show;
