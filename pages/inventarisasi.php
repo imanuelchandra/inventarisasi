@@ -126,6 +126,7 @@ if (!$reportView) {
                     echo simbio_form_element::selectList('gmd[]', $gmd_options, '', 'multiple="multiple" size="5" class="form-control col-3"');
                     ?><small class="text-muted"><?php echo __('Press Ctrl and click to select multiple entries'); ?></small>
                 </div>
+
                 <div class="form-group divRow">
                     <label><?php echo __('Tipe Koleksi'); ?></label>
                     <?php
@@ -138,6 +139,21 @@ if (!$reportView) {
                     echo simbio_form_element::selectList('tipeKoleksi[]', $coll_type_options, '', 'multiple="multiple" size="5" class="form-control col-3"');
                     ?>
                 </div>
+
+                <div class="form-group divRow">
+                    <label><?php echo __('Status Eksemplar'); ?></label>
+                    <?php
+                    $item_status_q = $dbs->query("SELECT item_status_id, item_status_name FROM mst_item_status");
+                    $item_status_options[] = array('all', __('ALL'));
+                    $item_status_options[] = array('0', __('Available'));
+                    while ($item_status_d = $item_status_q->fetch_row()) {
+                        $item_status_options[] = array($item_status_d[0], $item_status_d[1]);
+                    }
+
+                    echo simbio_form_element::selectList('itemStatus', $item_status_options, '', 'size="5" class="form-control col-3"');
+                    ?>
+                </div>
+
                 <div class="form-group divRow">
                     <label><?php echo __('Lokasi Ruangan'); ?></label>
                     <?php
@@ -307,6 +323,12 @@ if (!$reportView) {
             $criteria .= " AND i.coll_type_id IN($coll_type_IDs)";
         }
     }
+
+    if (isset($_GET['itemStatus']) and !empty($_GET['itemStatus']) and $_GET['itemStatus'] != 'all') {
+        $itemStatus = $dbs->escape_string(trim($_GET['itemStatus']));
+        $criteria .= ' AND mis.item_status_id=\''.$itemStatus.'\'';
+    }
+
     if (isset($_GET['gmd']) and !empty($_GET['gmd'])) {
         $gmd_IDs = '';
         foreach ($_GET['gmd'] as $id) {
