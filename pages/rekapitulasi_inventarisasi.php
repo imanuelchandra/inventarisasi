@@ -20,27 +20,7 @@
  *
  */
 
-/* Item List */
 
-// key to authenticate
-// define('INDEX_AUTH', '1');
-
-// // main system configuration
-
-// // IP based access limitation
-// require LIB . 'ip_based_access.inc.php';
-// do_checkIP('smc');
-// do_checkIP('smc-reporting');
-// // start the session
-// require SB . 'admin/default/session.inc.php';
-// require SB . 'admin/default/session_check.inc.php';
-// // privileges checking
-// $can_read = utility::havePrivilege('reporting', 'r');
-// $can_write = utility::havePrivilege('reporting', 'w');
-
-// if (!$can_read) {
-//     die('<div class="errorBox">' . __('You don\'t have enough privileges to access this area!') . '</div>');
-// }
 defined('INDEX_AUTH') OR die('Direct access not allowed!');
 
 //require '../../../sysconfig.inc.php';
@@ -64,17 +44,6 @@ require SIMBIO . 'simbio_GUI/form_maker/simbio_form_element.inc.php';
 require SIMBIO . 'simbio_DB/datagrid/simbio_dbgrid.inc.php';
 require MDLBS . 'reporting/report_dbgrid.inc.php';
 
-// function httpQuery($query = [])
-// {
-//     return http_build_query(array_unique(array_merge($_GET, $query)));
-// }
-
-// $page_title = 'Items/Copies Report';
-// $reportView = false;
-// $num_recs_show = 20;
-// if (isset($_GET['reportView'])) {
-//     $reportView = true;
-// }
 
 function httpQuery($query = [])
 {

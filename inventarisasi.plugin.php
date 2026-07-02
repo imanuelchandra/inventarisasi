@@ -11,9 +11,6 @@ use SLiMS\Plugins;
 
 $plugin = Plugins::getInstance();
 
-Plugins::getInstance()->registerAutoload(__DIR__);
-
-
 $pathBukuInduk = __DIR__ . '/pages/inventarisasi.php';
 $pathRekap = __DIR__ . '/pages/rekapitulasi_inventarisasi.php';
 //$path =  __DIR__ . '/pages/inventarisasi.php';
